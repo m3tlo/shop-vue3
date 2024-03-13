@@ -1,15 +1,23 @@
 import type { IProduct } from "@/types/product.ts"
 
-export  const fetchProducts = async (): Promise<IProduct[]> => {
-    try {
-        const fetchResponse = await fetch('https://vue-study.skillbox.cc/api/products')
-        const response = await fetchResponse.json()
-        const products: IProduct[] = response.items
-        
-        return products
+interface IResponseProduct {
+  product: IProduct
+}
 
-    } catch (error) {
-        throw new Error('error')
-        
+export const fetchProduct = async (
+  productId: string
+): Promise<IResponseProduct> => {
+  try {
+    const fetchResponse = await fetch(
+      `https://vue-study.skillbox.cc/api/products/${productId}`
+    )
+    const response = await fetchResponse.json()
+    const product: IProduct = response
+
+    return {
+      product: product,
     }
+  } catch (error) {
+    throw new Error("error")
+  }
 }
